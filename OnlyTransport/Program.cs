@@ -6,21 +6,17 @@ class Program
 {
     static async Task Main()
     {
-        var endpointConfiguration = new EndpointConfiguration("Endpoint");
-        endpointConfiguration.EnableInstallers();
+        var configuration = new EndpointConfiguration("Endpoint");
+        configuration.EnableInstallers();
 
-        #region TransportConfiguration
-
-        var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
-        var connection = @"Data Source=.;Database=SqlServerSimple;Integrated Security=True;Max Pool Size=100";
+        var transport = configuration.UseTransport<SqlServerTransport>();
+        var connection = "Data Source=.;Database=SqlServerSimple;Integrated Security=True;Max Pool Size=100";
         transport.ConnectionString(connection);
 
-        #endregion
-
-        transport.Transactions(TransportTransactionMode.SendsAtomicWithReceive);
+        transport.Transactions(TransportTransactionMode.TransactionScope);
 
         SqlHelper.EnsureDatabaseExists(connection);
-        var endpointInstance = await Endpoint.Start(endpointConfiguration)
+        var endpointInstance = await Endpoint.Start(configuration)
             .ConfigureAwait(false);
         await SendMessages(endpointInstance);
         await endpointInstance.Stop()
