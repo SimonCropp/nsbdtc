@@ -6,15 +6,26 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlyTransport", "OnlyTransp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{BF92D39E-42F6-44E9-8F7F-819993235621}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportAndPersistence", "TransportAndPersistence\TransportAndPersistence.csproj", "{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF92D39E-42F6-44E9-8F7F-819993235621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF92D39E-42F6-44E9-8F7F-819993235621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF92D39E-42F6-44E9-8F7F-819993235621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF92D39E-42F6-44E9-8F7F-819993235621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

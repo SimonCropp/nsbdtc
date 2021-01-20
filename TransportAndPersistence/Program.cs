@@ -1,6 +1,16 @@
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using NServiceBus;
+using NServiceBus.Persistence.Sql;
 
+[assembly: SqlPersistenceSettings(
+    MsSqlServerScripts = true,
+    MySqlScripts = false,
+    OracleScripts = false,
+    ProduceTimeoutScripts = false,
+    ProduceOutboxScripts = false,
+    ProduceSubscriptionScripts = false
+)]
 class Program
 {
     static async Task Main()
@@ -12,6 +22,10 @@ class Program
         transport.ConnectionString(connection);
         transport.Transactions(TransportTransactionMode.TransactionScope);
         transport.NativeDelayedDelivery();
+
+        var persistence = configuration.UsePersistence<SqlPersistence>();
+        persistence.SqlDialect<SqlDialect.MsSqlServer>();
+        persistence.ConnectionBuilder(() => new SqlConnection(connection));
 
         configuration.PurgeOnStartup(true);
         var endpointInstance = await Endpoint.Start(configuration)
