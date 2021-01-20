@@ -8,8 +8,7 @@ class Program
         var configuration = new EndpointConfiguration("Endpoint");
        // configuration.EnableInstallers();
         var transport = configuration.UseTransport<SqlServerTransport>();
-        var connection = "Data Source=VM-DEV-LBS12;Database=OtherDb;Integrated Security=True;Max Pool Size=100";
-        transport.ConnectionString(connection);
+        transport.ConnectionString(MyCommandHandler.Connection);
         transport.Transactions(TransportTransactionMode.TransactionScope);
         transport.NativeDelayedDelivery();
 

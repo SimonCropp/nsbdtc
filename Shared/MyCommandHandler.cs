@@ -4,13 +4,17 @@ using Microsoft.Data.SqlClient;
 using NServiceBus;
 using NServiceBus.Logging;
 
+//CREATE TABLE [dbo].[Table_1](
+//    [id] [uniqueidentifier] NULL
+//    ) ON [PRIMARY]
 public class MyCommandHandler : IHandleMessages<MyCommand>
 {
+    public static string Connection = "Data Source=VM-DEV-LBS12;Database=NServiceBus;Integrated Security=True;Max Pool Size=100";
     static ILog log = LogManager.GetLogger<MyCommandHandler>();
 
     public Task Handle(MyCommand commandMessage, IMessageHandlerContext context)
     {
-        using (var connection = new SqlConnection("Data Source=VM-DEV-LBS12;Database=OtherDb;Integrated Security=True;Max Pool Size=100"))
+        using (var connection = new SqlConnection(Connection))
         {
             connection.Open();
             using (var command = connection.CreateCommand())
