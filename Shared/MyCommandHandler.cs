@@ -10,7 +10,7 @@ public class MyCommandHandler : IHandleMessages<MyCommand>
 
     public Task Handle(MyCommand commandMessage, IMessageHandlerContext context)
     {
-        using (var connection = new SqlConnection("Data Source=.;Database=OtherDb;Integrated Security=True;Max Pool Size=100"))
+        using (var connection = new SqlConnection("Data Source=VM-DEV-LBS12;Database=OtherDb;Integrated Security=True;Max Pool Size=100"))
         {
             connection.Open();
             using (var command = connection.CreateCommand())
