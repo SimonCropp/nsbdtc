@@ -15,30 +15,12 @@ class Program
 
         transport.Transactions(TransportTransactionMode.TransactionScope);
 
+        configuration.PurgeOnStartup(true);
         SqlHelper.EnsureDatabaseExists(connection);
         var endpointInstance = await Endpoint.Start(configuration)
             .ConfigureAwait(false);
-        await SendMessages(endpointInstance);
+        await endpointInstance.SendLocal(new MyCommand());
         await endpointInstance.Stop()
             .ConfigureAwait(false);
-    }
-
-    static async Task SendMessages(IMessageSession messageSession)
-    {
-        Console.WriteLine("Press [c] to send a command. Press [Esc] to exit.");
-        while (true)
-        {
-            var input = Console.ReadKey();
-            Console.WriteLine();
-
-            switch (input.Key)
-            {
-                case ConsoleKey.C:
-                    await messageSession.SendLocal(new MyCommand());
-                    break;
-                case ConsoleKey.Escape:
-                    return;
-            }
-        }
     }
 }
