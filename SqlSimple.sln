@@ -2,11 +2,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 15.0.26730.12
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlyTransport", "OnlyTransport\OnlyTransport.csproj", "{B58159EB-9EFD-443F-A80E-8C90B0AF1907}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{BF92D39E-42F6-44E9-8F7F-819993235621}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportAndPersistence", "TransportAndPersistence\TransportAndPersistence.csproj", "{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyEndpoint_DtcEscalation", "MyEndpoint_DtcEscalation\MyEndpoint_DtcEscalation.csproj", "{9279DE35-CC81-42BE-BFEB-42DA321B2A6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B68100F8-DDFE-4612-8004-A59CB2FE8506}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,10 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B58159EB-9EFD-443F-A80E-8C90B0AF1907}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF92D39E-42F6-44E9-8F7F-819993235621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF92D39E-42F6-44E9-8F7F-819993235621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF92D39E-42F6-44E9-8F7F-819993235621}.Release|Any CPU.ActiveCfg = Release|Any CPU

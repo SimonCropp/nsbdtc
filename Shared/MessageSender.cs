@@ -4,7 +4,7 @@ using NServiceBus;
 
 public class MessageSender
 {
-    public static async Task SendMessages(IMessageSession messageSession)
+    public static async Task StartLoop(IMessageSession messageSession)
     {
         Console.WriteLine("Press [c] to send a command. Press [Esc] to exit.");
         while (true)
