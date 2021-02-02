@@ -33,8 +33,8 @@ class Program
                     // Cant use ISqlStorageSession.Transaction since diff databases
                     // instead since transport is TransportTransactionMode.TransactionScope
                     // ef will try to use the ambient TransactionScope
-                    // this should work, since two db on same sql instance should not escalate to
-                    // however it does
+                    // this should work, since two db on same sql instance should not escalate
+                    // however it does escalate and an exception is thrown
 
                     //Ensure context is flushed before the ISqlStorageSession transaction is committed
                     session.OnSaveChanges(_ => context.SaveChangesAsync());

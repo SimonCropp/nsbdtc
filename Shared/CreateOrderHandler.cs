@@ -12,7 +12,7 @@ public class CreateOrderHandler : IHandleMessages<CreateOrder>
     {
         this.dataContext = dataContext;
     }
-    public Task Handle(CreateOrder commandMessage, IMessageHandlerContext context)
+    public Task Handle(CreateOrder message, IMessageHandlerContext context)
     {
         dataContext.Orders.Add(
             new Order
