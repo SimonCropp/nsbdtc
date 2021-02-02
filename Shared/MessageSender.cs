@@ -15,7 +15,7 @@ public class MessageSender
             switch (input.Key)
             {
                 case ConsoleKey.C:
-                    await messageSession.SendLocal(new MyCommand());
+                    await messageSession.SendLocal(new CreateOrder());
                     break;
                 case ConsoleKey.Escape:
                     return;
