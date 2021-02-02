@@ -9,7 +9,6 @@ public class MyDataContext :
     }
 
     public DbSet<Order> Orders { get; set; }
-    public DbSet<Shipment> Shipments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,10 +18,5 @@ public class MyDataContext :
         orders.ToTable("Orders");
         orders.HasKey(x => x.OrderId);
         orders.Property(x => x.Value);
-
-        var shipments = modelBuilder.Entity<Shipment>();
-        shipments.ToTable("Shipments");
-        shipments.HasKey(x => x.Id);
-
     }
 }

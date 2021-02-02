@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using NServiceBus;
 using NServiceBus.Persistence.Sql;
 
