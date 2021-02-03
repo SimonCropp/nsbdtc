@@ -13,6 +13,10 @@ public static class CommonConfig
         transport.Transactions(TransportTransactionMode.SendsAtomicWithReceive);
         transport.NativeDelayedDelivery();
 
+        var recoverability = configuration.Recoverability();
+        recoverability.Delayed(_ => _.NumberOfRetries(0));
+        recoverability.Immediate(_ => _.NumberOfRetries(0));
+
         var persistence = configuration.UsePersistence<SqlPersistence>();
         persistence.SqlDialect<SqlDialect.MsSqlServer>();
 
