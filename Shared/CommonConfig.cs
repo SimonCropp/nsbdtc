@@ -19,7 +19,7 @@ public static class CommonConfig
         persistence.ConnectionBuilder(() => new SqlConnection(nsbConnection));
 
         var endpointName = configuration.GetSettings().EndpointName();
-    //    configuration.Pipeline.Register(new ReplyPatchingBehavior.Step(endpointName));
+        configuration.Pipeline.Register(new ReplyPatchingBehavior.Step(endpointName));
 
         configuration.SendFailedMessagesTo("error");
         configuration.AuditProcessedMessagesTo("audit");
