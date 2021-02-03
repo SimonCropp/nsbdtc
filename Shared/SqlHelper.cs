@@ -8,12 +8,12 @@ public static class SqlHelper
         SqlConnectionStringBuilder builder = new(connectionString);
         var database = builder.InitialCatalog;
 
-        var masterConnection = connectionString.Replace(builder.InitialCatalog, "master");
+        var masterConnectionString = connectionString.Replace(builder.InitialCatalog, "master");
 
-        await using SqlConnection connection = new(masterConnection);
-        await connection.OpenAsync();
+        await using SqlConnection masterConnection = new(masterConnectionString);
+        await masterConnection.OpenAsync();
 
-        await using var command = connection.CreateCommand();
+        await using var command = masterConnection.CreateCommand();
         command.CommandText = $@"
 if(db_id('{database}') is null)
     create database [{database}]
