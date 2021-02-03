@@ -1,24 +1,37 @@
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using NServiceBus;
 using NServiceBus.Persistence.Sql;
-using NServiceBus.Transport;
+using Utilities.NServiceBus;
 
-await DbContextBuilder.EnsureExists();
+async Task DoInstall()
+{
+    await DbContextBuilder.EnsureExists();
+    await using var businessConnection = await Connections.OpenBusiness();
+    await using var openNServiceBus = await Connections.OpenNServiceBus();
+    await SynonymInstaller.Install("MyEndpoint", openNServiceBus, businessConnection);
+}
+
+await DoInstall();
+
 
 var configuration = new EndpointConfiguration("MyEndpoint");
 configuration.SendFailedMessagesTo("error");
 configuration.AuditProcessedMessagesTo("audit");
 configuration.EnableInstallers();
 configuration.PurgeOnStartup(true);
-
 var transport = configuration.UseTransport<SqlServerTransport>();
-transport.ConnectionString(Connections.NServiceBus);
-transport.Transactions(TransportTransactionMode.TransactionScope);
+
+// note that transport is connecting to the Business DB
+transport.ConnectionString(Connections.Business);
+transport.Transactions(TransportTransactionMode.SendsAtomicWithReceive);
 transport.NativeDelayedDelivery();
 
 var persistence = configuration.UsePersistence<SqlPersistence>();
 persistence.SqlDialect<SqlDialect.MsSqlServer>();
-persistence.ConnectionBuilder(() => new SqlConnection(Connections.NServiceBus));
+
+// note that persistence is connecting to the Business DB
+persistence.ConnectionBuilder(() => new SqlConnection(Connections.Business));
 
 configuration.RegisterComponents(c =>
 {
@@ -26,12 +39,8 @@ configuration.RegisterComponents(c =>
         {
             var session = b.Build<ISqlStorageSession>();
 
-            var context = DbContextBuilder.Build();
-            // Cant use ISqlStorageSession.Transaction since diff databases
-            // instead since transport is TransportTransactionMode.TransactionScope
-            // ef will try to use the ambient TransactionScope
-            // this should work, since two db on same sql instance should not escalate
-            // however it does escalate and an exception is thrown
+            // Since now using the same connection the session can be used
+            var context = DbContextBuilder.Build(session.Connection, session.Transaction);
 
             //Ensure context is flushed before the ISqlStorageSession transaction is committed
             session.OnSaveChanges(_ => context.SaveChangesAsync());
@@ -44,3 +53,4 @@ configuration.RegisterComponents(c =>
 var endpointInstance = await Endpoint.Start(configuration);
 await MessageSender.StartLoop(endpointInstance);
 await endpointInstance.Stop();
+

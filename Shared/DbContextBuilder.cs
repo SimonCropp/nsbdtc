@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,15 @@ public static class DbContextBuilder
             .UseSqlServer(Connections.Business)
             .Options;
         return new MyDataContext(contextOptions);
+    }
+    public static MyDataContext Build(DbConnection connection, DbTransaction transaction)
+    {
+        var contextOptions = new DbContextOptionsBuilder<MyDataContext>()
+            .UseSqlServer(connection)
+            .Options;
+        var context = new MyDataContext(contextOptions);
+        context.Database.UseTransaction(transaction);
+        return context;
     }
 
     public static async Task EnsureExists()
