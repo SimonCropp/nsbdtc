@@ -7,8 +7,7 @@ When using the NServiceBus Sql transport and also writing to a different Sql dat
 
   * [Requirements](#requirements)
   * [Running](#running)
-  * [Hacks](#hacks)
-    * [Synonyms](#synonyms)<!-- endToc -->
+  * [Synonyms](#synonyms)<!-- endToc -->
 
 
 
@@ -24,10 +23,7 @@ When using the NServiceBus Sql transport and also writing to a different Sql dat
  * Hit `c` on OrdersEndpoint
 
 
-## Hacks
-
-
-### Synonyms
+## Synonyms
 
 Endpoints don't interact with the `NServiceBus` database. Instead they interact with the business database, in this case `Orders` and `Shipping`.
 
