@@ -4,11 +4,11 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OrdersEndpoint\OrdersEndpoint.csproj" />
+    <ProjectReference Include="..\ShippingEndpoint\ShippingEndpoint.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
     <PackageReference Include="NServiceBus.SqlServer.Native" Version="7.9.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.1" />
-    <Content Include="..\OrdersEndpoint\PromotedSqlScripts\**\*.*">
+    <Content Include="..\ShippingEndpoint\PromotedSqlScripts\**\*.*">
       <Link>NServiceBus.Persistence.Sql\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

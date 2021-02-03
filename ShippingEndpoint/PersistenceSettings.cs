@@ -7,5 +7,5 @@ using NServiceBus.Persistence.Sql;
     ProduceTimeoutScripts = false,
     ProduceOutboxScripts = false,
     ProduceSubscriptionScripts = false,
-    ScriptPromotionPath = "$(ProjectDir)PromotedSqlScripts"
+    ScriptPromotionPath = @"$(ProjectDir)..\PromotedSqlScripts"
 )]

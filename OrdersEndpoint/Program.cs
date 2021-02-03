@@ -1,23 +1,9 @@
-using Microsoft.Data.SqlClient;
 using NServiceBus;
 using NServiceBus.Persistence.Sql;
 
 var configuration = new EndpointConfiguration("OrdersEndpoint");
-configuration.SendFailedMessagesTo("error");
-configuration.AuditProcessedMessagesTo("audit");
-configuration.PurgeOnStartup(true);
-var transport = configuration.UseTransport<SqlServerTransport>();
-
-// note that transport is connecting to the Orders DB
-transport.ConnectionString(Connections.Orders);
-transport.Transactions(TransportTransactionMode.SendsAtomicWithReceive);
-transport.NativeDelayedDelivery();
-
-var persistence = configuration.UsePersistence<SqlPersistence>();
-persistence.SqlDialect<SqlDialect.MsSqlServer>();
-
-// note that persistence is connecting to the Orders DB
-persistence.ConnectionBuilder(() => new SqlConnection(Connections.Orders));
+// note that transport and persistence is using the business DB
+configuration.ApplyCommonConfig(Connections.Orders);
 
 configuration.RegisterComponents(c =>
 {

@@ -10,19 +10,20 @@ public static class SynonymInstaller
         string endpoint,
         DbConnection nsbConnection,
         DbConnection businessConnection,
-        params string[] interactionEndpoints)
+        IEnumerable<string>? interactionEndpoints = null)
     {
         Console.WriteLine("Running Synonym installation");
         Synonym synonym = new(businessConnection, "NServiceBus");
 
         await synonym.Create("error");
         await synonym.Create("audit");
-        //TODO:
-        //await synonym.Create("Particular.ServiceControl");
-        //await synonym.Create("Particular.Monitoring");
-        foreach (var interactionEndpoint in interactionEndpoints)
+        await synonym.Create("SubscriptionRouting");
+        if (interactionEndpoints != null)
         {
-            await synonym.Create(interactionEndpoint);
+            foreach (var interactionEndpoint in interactionEndpoints)
+            {
+                await synonym.Create(interactionEndpoint);
+            }
         }
 
         foreach (var tableName in await GetEndpointTables(nsbConnection, endpoint))

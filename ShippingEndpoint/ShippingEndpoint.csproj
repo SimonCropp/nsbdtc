@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
     <PackageReference Include="NServiceBus" Version="7.4.4" />
-    <PackageReference Include="NServiceBus.Persistence.Sql" Version="6.0.4" />
+    <PackageReference Include="NServiceBus.SqlServer.Native" Version="7.9.0" />
     <PackageReference Include="NServiceBus.Transport.SqlServer" Version="6.2.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.1" />
-    <PackageReference Include="NServiceBus.SqlServer.Native" Version="7.9.0" />
   </ItemGroup>
 </Project>

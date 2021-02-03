@@ -15,7 +15,11 @@ static class MessageSender
             switch (input.Key)
             {
                 case ConsoleKey.C:
-                    await messageSession.SendLocal(new CreateOrder());
+                    await messageSession.SendLocal(
+                        new CreateOrder
+                        {
+                            OrderId =  Guid.NewGuid()
+                        });
                     break;
                 case ConsoleKey.Escape:
                     return;
