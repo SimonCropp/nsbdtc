@@ -3,14 +3,30 @@
 <!-- toc -->
 ## Contents
 
-  * [Synonyms](#synonyms)
-  * [Address patching](#address-patching)
-    * [AutoSubscribe](#autosubscribe)
-    * [ReplyPatching](#replypatching)
   * [Requirements](#requirements)
-  * [Running](#running)<!-- endToc -->
+  * [Running](#running)
+  * [Hacks](#hacks)
+    * [Synonyms](#synonyms)
+    * [Address patching](#address-patching)<!-- endToc -->
 
-## Synonyms
+
+
+## Requirements
+
+ * Sql instance avalibale on `.`
+
+
+## Running
+
+ * Run both ShippingInstaller and OrdersInstaller.
+ * Run both OrdersEndpoint and ShippingEndpoint
+ * Hit `c` on OrdersEndpoint
+
+
+## Hacks
+
+
+### Synonyms
 
 Endpoints don't interact with the `NServiceBus` database. Instead they interact with the business database, in this case `Orders` and `Shipping`.
 
@@ -208,7 +224,7 @@ await SynonymInstaller.Install(
 <!-- endSnippet -->
 
 
-## Address patching
+### Address patching
 
 Since the Orders database is being used for the messaging, the SqlTransport using the db name queue names. 
 
@@ -217,7 +233,7 @@ So when sending from Orders the address used is `OrdersEndpoint@[dbo]@[Orders]` 
 This manifests in the AustoSubscribe feature and the reply address. Both of these need to be patched.
 
 
-### AutoSubscribe
+#### AutoSubscribe
 
 <!-- snippet: AutoSubscribeEx.cs -->
 <a id='snippet-AutoSubscribeEx.cs'></a>
@@ -321,7 +337,7 @@ class AutoSubscribeEx : Feature
 <!-- endSnippet -->
 
 
-### ReplyPatching
+#### ReplyPatching
 
 <!-- snippet: ReplyPatchingBehavior.cs -->
 <a id='snippet-ReplyPatchingBehavior.cs'></a>
@@ -363,16 +379,4 @@ class ReplyPatchingBehavior :
 ```
 <sup><a href='/Shared/ReplyPatchingBehavior.cs#L1-L34' title='Snippet source file'>snippet source</a> | <a href='#snippet-ReplyPatchingBehavior.cs' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
-
-
-## Requirements
-
- * Sql instance avalibale on `.`.
- 
-
-## Running
-
- * Run both ShippingInstaller and OrdersInstaller.
- * Run both OrdersEndpoint and ShippingEndpoint
- * Hit `c` on OrdersEndpoint
 
