@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using NServiceBus;
 
-public class MessageSender
+static class MessageSender
 {
     public static async Task StartLoop(IMessageSession messageSession)
     {

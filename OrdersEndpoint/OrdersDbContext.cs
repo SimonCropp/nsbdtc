@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 
-public class MyDataContext :
+public class OrdersDbContext :
     DbContext
 {
-    public MyDataContext(DbContextOptions options)
-    : base(options)
+    public OrdersDbContext(DbContextOptions options) : base(options)
     {
     }
 
