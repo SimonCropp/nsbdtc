@@ -1,5 +1,7 @@
 # NSB Sql Proxy
 
+When using the NServiceBus Sql transport and also writing to a different Sql database on the same Sql server the .net sql client will incorrectly escalate to DTC. This repo provides a workaround to prevent this behavior by using [Synonyms](https://docs.microsoft.com/en-us/sql/relational-databases/synonyms/synonyms-database-engine).
+
 <!-- toc -->
 ## Contents
 
@@ -13,7 +15,7 @@
 
 ## Requirements
 
- * Sql instance avalibale on `.`
+ * Sql instance available on `.`
 
 
 ## Running
