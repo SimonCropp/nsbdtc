@@ -30,7 +30,9 @@
 
 Endpoints don't interact with the `NServiceBus` database. Instead they interact with the business database, in this case `Orders` and `Shipping`.
 
-This is achieved by using [Synonyms](https://docs.microsoft.com/en-us/sql/relational-databases/synonyms/synonyms-database-engine). A utility class is used from the [NServiceBus.SqlNative project](https://github.com/NServiceBusExtensions/NServiceBus.SqlNative).
+This is achieved by using [Synonyms](https://docs.microsoft.com/en-us/sql/relational-databases/synonyms/synonyms-database-engine).
+
+A utility class from the [NServiceBus.SqlNative project](https://github.com/NServiceBusExtensions/NServiceBus.SqlNative) enables creating Synonyms.
 
 <!-- snippet: https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.SqlNative/master/src/SqlServer.Native/Synonym.cs -->
 <a id='snippet-https://raw.githubusercontent.com/NServiceBusExtensions/NServiceBus.SqlNative/master/src/SqlServer.Native/Synonym.cs'></a>
