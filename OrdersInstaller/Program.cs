@@ -11,17 +11,7 @@ await SqlHelper.EnsureDatabaseExists(Connections.NServiceBus);
 await using var nsbConnection = await Connections.OpenNServiceBus();
 
 await QueueInstaller.Install("OrdersEndpoint", nsbConnection);
-await PersistenceInstaller.Install("OrdersEndpoint", Connections.NServiceBus);
-
-#region CallSynonymInstaller
-
-await SynonymInstaller.Install(
-    "OrdersEndpoint",
-    nsbConnection,
-    ordersConnection,
-    new List<string> {"ShippingEndpoint"});
-
-#endregion
+await PersistenceInstaller.Install("OrdersEndpoint", Connections.Orders);
 
 async Task CreateOrdersDb()
 {

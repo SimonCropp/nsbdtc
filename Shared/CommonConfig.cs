@@ -1,16 +1,45 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
+using Microsoft.Data.SqlClient;
 using NServiceBus;
-using NServiceBus.Configuration.AdvancedExtensibility;
-using NServiceBus.Features;
 
 public static class CommonConfig
 {
-    public static void ApplyCommonConfig(this EndpointConfiguration configuration, string nsbConnection)
+    public static void ApplyCommonConfig(this EndpointConfiguration configuration, string connectionString)
     {
         var transport = configuration.UseTransport<SqlServerTransport>();
 
-        transport.ConnectionString(nsbConnection);
-        transport.Transactions(TransportTransactionMode.SendsAtomicWithReceive);
+        transport.UseCustomSqlConnectionFactory(async () =>
+        {
+            SqlConnection connection = null;
+
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                await connection.OpenAsync();
+                await connection.ChangeDatabaseAsync("NServiceBus");
+
+                return connection;
+            }
+            catch
+            {
+                if(connection != null)
+                {
+                    await connection.DisposeAsync();
+                }
+
+                throw;
+            }
+        });
+
+        transport.UseCatalogForQueue("ShippingEndpoint", "NServiceBus");
+        transport.UseCatalogForQueue("ShippingEndpoint.Delayed", "NServiceBus");
+        transport.UseCatalogForQueue("OrdersEndpoint", "NServiceBus");
+        transport.UseCatalogForQueue("OrdersEndpoint.Delayed", "NServiceBus");
+        transport.UseCatalogForQueue("error", "NServiceBus");
+        transport.UseCatalogForQueue("audit", "NServiceBus");
+
+        transport.SubscriptionSettings().SubscriptionTableName("SubscriptionRouting", "dbo", "NServiceBus");
+        transport.Transactions(TransportTransactionMode.TransactionScope);
         transport.NativeDelayedDelivery();
 
         var recoverability = configuration.Recoverability();
@@ -20,17 +49,9 @@ public static class CommonConfig
         var persistence = configuration.UsePersistence<SqlPersistence>();
         persistence.SqlDialect<SqlDialect.MsSqlServer>();
 
-        persistence.ConnectionBuilder(() => new SqlConnection(nsbConnection));
-
-        var endpointName = configuration.GetSettings().EndpointName();
-        configuration.Pipeline.Register(new ReplyPatchingBehavior.Step(endpointName));
+        persistence.ConnectionBuilder(() => new SqlConnection(connectionString));
 
         configuration.SendFailedMessagesTo("error");
         configuration.AuditProcessedMessagesTo("audit");
-
-        configuration.GetSettings().Set("NServiceBusConnectionString", nsbConnection);
-        // disable AutoSubscribe and replace with AutoSubscribeEx
-        configuration.DisableFeature<AutoSubscribe>();
-        configuration.EnableFeature<AutoSubscribeEx>();
     }
 }
