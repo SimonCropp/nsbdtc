@@ -7,6 +7,7 @@ When using the NServiceBus Sql transport and also writing to a different Sql dat
 
   * [Requirements](#requirements)
   * [Running](#running)
+  * [Synonyms](#synonyms)
     * [Address patching](#address-patching)<!-- endToc -->
 
 
